@@ -1,0 +1,3 @@
+let getters = {
+    post: state =>
+}
