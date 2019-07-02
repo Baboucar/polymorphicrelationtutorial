@@ -24,18 +24,21 @@ export default new Vuex.Store({
    },
    // Mutations help us to change the data of the state
    mutations:{
-       ADD_LANGUAGE:(state,link) =>{
-           state.languages.push(link)
+       ADD_LANGUAGE:(state,post) =>{
+           state.languages.push(post)
        },
+
+    // mutations for posts begin here
 
        CREATE_POST(state,post){
            state.posts.unshift(post)
        },
-       FETCH_POSTS(state,posts){
-           return state.posts = posts;
+       FETCH_POSTS(state,post){
+           return state.posts = post;
        },
        DELETE_POST(state,post){
-           let index =  state.posts.find(item => item.id === post.id)
+
+           let index =  state.posts.findIndex(item => item.id === post.id)
             state.posts.splice(index,1)
        }
    },
@@ -43,7 +46,7 @@ export default new Vuex.Store({
        createPost({commit},post){
            axios.post('/api/post',post)
            .then(res=>{
-               commit('CREATE_POST',res.data)
+               commit('CREATE_POST',res.data) // commiting the CREATE_POST mutations in the action because you cannot commit in a mutation
            }).catch(err=>{
                console.log(err)
            })
@@ -59,9 +62,9 @@ export default new Vuex.Store({
        deletePost({commit},post){
            axios.delete(`/api/post/${post.id}`)
               .then(res=>{
-                  if(res.data == 'ok')
+                  if(res.data == "ok")
                     commit('DELETE_POST',post)
-                   
+
               }).catch(err=> {
                   console.log(err)
               })

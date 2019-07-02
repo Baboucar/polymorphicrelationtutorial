@@ -37530,7 +37530,7 @@ var render = function() {
                 staticClass: "btn btn-danger",
                 on: {
                   click: function($event) {
-                    return _vm.deletePost(_vm.post)
+                    return _vm.deletePost(p)
                   }
                 }
               },
@@ -37605,7 +37605,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-primary",
+              staticClass: "btn btn-success",
               attrs: { disabled: !_vm.isValid },
               on: {
                 click: function($event) {
@@ -51390,17 +51390,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   },
   // Mutations help us to change the data of the state
   mutations: {
-    ADD_LANGUAGE: function ADD_LANGUAGE(state, link) {
-      state.languages.push(link);
+    ADD_LANGUAGE: function ADD_LANGUAGE(state, post) {
+      state.languages.push(post);
     },
+    // mutations for posts begin here
     CREATE_POST: function CREATE_POST(state, post) {
       state.posts.unshift(post);
     },
-    FETCH_POSTS: function FETCH_POSTS(state, posts) {
-      return state.posts = posts;
+    FETCH_POSTS: function FETCH_POSTS(state, post) {
+      return state.posts = post;
     },
     DELETE_POST: function DELETE_POST(state, post) {
-      var index = state.posts.find(function (item) {
+      var index = state.posts.findIndex(function (item) {
         return item.id === post.id;
       });
       state.posts.splice(index, 1);
@@ -51410,7 +51411,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     createPost: function createPost(_ref, post) {
       var commit = _ref.commit;
       axios.post('/api/post', post).then(function (res) {
-        commit('CREATE_POST', res.data);
+        commit('CREATE_POST', res.data); // commiting the CREATE_POST mutations in the action because you cannot commit in a mutation
       })["catch"](function (err) {
         console.log(err);
       });
@@ -51426,7 +51427,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     deletePost: function deletePost(_ref3, post) {
       var commit = _ref3.commit;
       axios["delete"]("/api/post/".concat(post.id)).then(function (res) {
-        if (res.data == 'ok') commit('DELETE_POST', post);
+        if (res.data == "ok") commit('DELETE_POST', post);
       })["catch"](function (err) {
         console.log(err);
       });

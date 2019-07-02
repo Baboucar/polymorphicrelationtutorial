@@ -9,7 +9,7 @@
                   <div>
                       {{p.content}}
                   </div>
-                  <button class="btn btn-danger" @click="deletePost(post)">delete</button>
+                  <button class="btn btn-danger" @click="deletePost(p)">delete</button>
              </li>
          </ul>
      </div>
@@ -26,7 +26,7 @@
       </div>
 
       <div class="form--group">
-          <button  :disabled="!isValid" @click.prevent="createPost(post)" class="btn btn-primary"> Submit</button>
+          <button  :disabled="!isValid" @click.prevent="createPost(post)" class="btn btn-success"> Submit</button>
       </div>
 
      </form>
